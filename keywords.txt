@@ -1,0 +1,33 @@
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+InfluxDB	KEYWORD1
+Influx	KEYWORD1
+InfluxStatus	KEYWORD1
+InfluxMeasurement	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+addField	KEYWORD2
+addTag	KEYWORD2
+toString	KEYWORD2
+setDefaultHost	KEYWORD2
+setDefaultDb	KEYWORD2
+testConnection	KEYWORD2
+appendMeasurement	KEYWORD2
+writePoint	KEYWORD2
+writeMultiplePoints	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+InfluxOk LITERAL1
+InfluxNoResponse LITERAL1
+InfluxNoSuchDb LITERAL1
+InfluxDefaultHostNotSet LITERAL1
+InfluxDefaultDbNotSet LITERAL1
+InfluxNothingToSend LITERAL1
