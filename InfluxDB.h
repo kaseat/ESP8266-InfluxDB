@@ -46,24 +46,71 @@
 		* \brief Set default database name.
 		*/
 		void setDefaultDb(String dbName);
+
+
+		/**
+		* \brief Create new database at default host.
+		* \param dbName Database name.
+		* \return Returns operation status.
+		*/
+		InfluxStatus createDatabase(String dbName);
+		/**
+		* \brief Create new database.
+		* \param hostName InfluxDB host name.
+		* \param dbName Database name.
+		* \return Returns operation status.
+		*/
+		InfluxStatus createDatabase(String hostName, String dbName);
+		/**
+		* \brief Drop specified database at default host.
+		* \param dbName Database name.
+		* \return Returns operation status.
+		*/
+		InfluxStatus dropDatabase(String dbName);
+		/**
+		* \brief Drop specified database.
+		* \param hostName InfluxDB host name.
+		* \param dbName Database name.
+		* \return Returns operation status.
+		*/
+		InfluxStatus dropDatabase(String hostName, String dbName);
+
+
+		/**
+		* \brief Try to connect to a default host.
+		* \return Returns operation status.
+		*/
+		InfluxStatus testHostConnection();
+		/**
+		* \brief Try to connect to a host.
+		* \param hostName InfluxDB host name.
+		* \return Returns operation status.
+		*/
+		InfluxStatus testHostConnection(String hostName);
+
+
+		/**
+		* \brief Try to connect to a database.
+		* \param dbName Database name.
+		* \return Returns operation status.
+		*/
+		InfluxStatus testDbConnection();
 		/**
 		* \brief Try to connect to a database.
 		* \param hostName InfluxDB host name.
 		* \param dbName Database name.
 		* \return Returns operation status.
 		*/
-		InfluxStatus testConnection(String hostName, String dbName);
+		InfluxStatus testDbConnection(String dbName);
 		/**
-		* \brief Try to connect to a database to a default host.
+		* \brief Try to connect to a database.
+		* \param hostName InfluxDB host name.
 		* \param dbName Database name.
 		* \return Returns operation status.
 		*/
-		InfluxStatus testConnection(String dbName);
-		/**
-		* \brief Try to connect to a default host and a default database.
-		* \return Returns operation status.
-		*/
-		InfluxStatus testConnection();
+		InfluxStatus testDbConnection(String hostName, String dbName);
+
+
 		/**
 		* \brief Append measurement into the database (will store measurement data locally,
 		* to send mmultiple measurements stored locally in one request use 'writeMultiplePoints' method).
@@ -112,6 +159,7 @@
 
 	private:
 		InfluxStatus write(String hostName, String dbName, String data);
+		InfluxStatus manageDb(String hostName, String dbName, String action);
 		String dataToSend;
 		String defaultHostName;
 		String defaultDbName;

@@ -26,21 +26,65 @@ void InfluxDB::setDefaultDb(String dbName)
 	defaultDbName = dbName;
 }
 
-InfluxStatus InfluxDB::testConnection()
-{
-	return defaultDbName == ""
-		? InfluxDefaultDbNotSet
-		: testConnection(defaultDbName);
-}
-
-InfluxStatus InfluxDB::testConnection(String dbName)
+InfluxStatus InfluxDB::createDatabase(String dbName)
 {
 	return defaultHostName == ""
 		? InfluxDefaultHostNotSet
-		: testConnection(defaultHostName, dbName);
+		: createDatabase(defaultHostName, dbName);
 }
 
-InfluxStatus InfluxDB::testConnection(String hostName, String dbName)
+InfluxStatus InfluxDB::createDatabase(String hostName, String dbName)
+{
+	return manageDb(hostName, dbName, "create");
+}
+
+InfluxStatus InfluxDB::dropDatabase(String dbName)
+{
+	return defaultHostName == ""
+		? InfluxDefaultHostNotSet
+		: dropDatabase(defaultHostName, dbName);
+}
+
+InfluxStatus InfluxDB::dropDatabase(String hostName, String dbName)
+{
+	return manageDb(hostName, dbName, "drop");
+}
+
+InfluxStatus InfluxDB::testHostConnection()
+{
+	return defaultHostName == ""
+		? InfluxDefaultHostNotSet
+		: testHostConnection(defaultHostName);
+}
+
+InfluxStatus InfluxDB::testHostConnection(String hostName)
+{
+	HTTPClient http;
+	http.begin("http://" + hostName + "/ping");
+
+	auto result = http.GET() == HTTP_CODE_NO_CONTENT
+		? InfluxOk
+		: InfluxNoResponse;
+
+	http.end();
+	return result;
+}
+
+InfluxStatus InfluxDB::testDbConnection()
+{
+	return defaultDbName == ""
+		? InfluxDefaultDbNotSet
+		: testDbConnection(defaultDbName);
+}
+
+InfluxStatus InfluxDB::testDbConnection(String dbName)
+{
+	return defaultHostName == ""
+		? InfluxDefaultHostNotSet
+		: testDbConnection(defaultHostName, dbName);
+}
+
+InfluxStatus InfluxDB::testDbConnection(String hostName, String dbName)
 {
 	HTTPClient http;
 	http.begin("http://" + hostName + "/query?q=show%20databases");
@@ -112,6 +156,19 @@ InfluxStatus InfluxDB::write(String hostName, String dbName, String data)
 	http.addHeader("Content-Type", "text/plain");
 
 	auto result = http.POST(data) == HTTP_CODE_NO_CONTENT
+		? InfluxOk
+		: InfluxNoResponse;
+
+	http.end();
+	return result;
+}
+
+InfluxStatus InfluxDB::manageDb(String hostName, String dbName, String action)
+{
+	HTTPClient http;
+	http.begin("http://" + hostName + "/query?q=" + action + "%20database%20\"" + dbName + "\"");
+
+	auto result = http.POST("") == HTTP_CODE_OK
 		? InfluxOk
 		: InfluxNoResponse;
 

@@ -14,9 +14,13 @@ InfluxMeasurement	KEYWORD1
 addField	KEYWORD2
 addTag	KEYWORD2
 toString	KEYWORD2
+
 setDefaultHost	KEYWORD2
 setDefaultDb	KEYWORD2
-testConnection	KEYWORD2
+createDatabase	KEYWORD2
+dropDatabase	KEYWORD2
+testHostConnection	KEYWORD2
+testDbConnection	KEYWORD2
 appendMeasurement	KEYWORD2
 writePoint	KEYWORD2
 writeMultiplePoints	KEYWORD2
