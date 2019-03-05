@@ -25,7 +25,7 @@ void InfluxMeasurement::addField(String key, float value)
 {
 	key.replace(" ", "_");
 	fields == "" ? fields = " " : fields += ",";
-	fields += "," + key + "=" + String(value);
+	fields += key + "=" + String(value);
 }
 
 void InfluxMeasurement::addField(String key, int value)
