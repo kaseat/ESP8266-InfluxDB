@@ -52,6 +52,10 @@ public:
 	* \return Returns string representation of the measurement.
 	*/
 	String toString();
+	/**
+	 * \brief Clear the fields of a measurement.
+	 */
+	void clearFields() { fields = ""; }
 
 private:
 	String fields;
